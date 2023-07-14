@@ -260,6 +260,10 @@
 .map-warp {
     padding: 20px 100px 20px 20px;
     background: #f1f4f6;
+    min-height: 500px;
+    &.active {
+        padding-right: 328px;
+    }
 }
 
 .sidebar {
@@ -413,4 +417,61 @@
             }
         }
     }
+}
+
+
+
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        .top-section {
+            display: none;
+        }
+        .sidebar-menu {
+            .top-menu {
+                flex-direction: row;
+                justify-content: space-around;
+                
+                .sidebar-link {
+                    .menu-text {
+                        display: block;
+                            margin-right: 10px;
+                    }
+                }
+            }
+           
+        }
+         &.active {
+            width: 100%;
+             .sidebar-menu { 
+                .top-menu {
+                    .menu-group-title {
+                        display: none;
+                    }
+                    .sidebar-link {
+                        .collapse-icon {
+                            display: none;
+                        }
+                    }
+                }
+                .fliter-warp-content {
+                        position: absolute;
+                    padding: 10px 2rem 10px 20px;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    overflow-y: auto;
+                }
+             }
+               
+            }
+    }
+
+    .map-warp {
+    padding: 10px;
+    background: #f1f4f6;
+    min-height: auto;
+   
+}
 }

@@ -1,17 +1,14 @@
-<div *ngIf="apiLoaded | async">
+<ng-container *ngIf="apiLoaded | async; let apiLoaded; else inactive">
 
-  <ng-container *ngIf="areaFiltrationStatus">
-    <google-map [options]="options">
-      <map-marker 
+  <google-map (mapInitialized)="onMapReady($event)" [options]="options" [zoom]="2"> 
+    <ng-container *ngIf="areaFiltrationStatus">
+    <map-marker 
         *ngFor="let districts of districts"
         [position]="{ lat: districts.longitude, lng: districts.latitude }"
         [icon]="{ url: districts.icon, scaledSize: topSize}"
-        (mapClick)="openDistrictsInfo(districts)"></map-marker>
-    </google-map>
-  </ng-container>
-
-  <ng-container *ngIf="!areaFiltrationStatus">
-    <google-map [options]="options">
+        (mapClick)="openDistrictsInfo($event,districts)"></map-marker>
+      </ng-container>
+      <ng-container *ngIf="!areaFiltrationStatus">
       <map-marker-clusterer
         [minimumClusterSize]="clusterOptions.minimumClusterSize"
         [gridSize]="clusterOptions.gridSize" 
@@ -27,9 +24,13 @@
           *ngIf="(directionsResults$ | async) as directionsResults"
           [directions]="directionsResults"></map-directions-renderer>
       </map-marker-clusterer>
-    </google-map>
+    </ng-container>
+  </google-map>
 
-  </ng-container>
+   
+
+
+  
 
 
   <app-map-project-info 
@@ -39,4 +40,10 @@
     [branchInfo]="selectedBranch">
   </app-map-project-info>
 
-</div>
+</ng-container>
+
+<ng-template #inactive>
+  <div class="loader">
+    <img src="assets/images/loader.gif"/>
+  </div>
+</ng-template>

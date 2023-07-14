@@ -1,7 +1,7 @@
 import { CityService } from "./../../core/services/city.service";
 import { ActivityService } from "./../../core/services/activity.service";
 import { CategoryService } from "./../../core/services/cateogry.service";
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit, SimpleChanges } from "@angular/core";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { Category, SubCategory } from "src/app/core/models/category.model";
 import { BranchService } from "src/app/core/services/branch.service";
@@ -70,6 +70,7 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
   showStatistics = false;
   isFilterDisplayed = false
   areaFiltrationStatus = true
+  markerCenter: any
   constructor(
     private categoryService: CategoryService,
     private activityService: ActivityService,
@@ -85,6 +86,8 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
     this.districts = this.districtService.getDistricts();
     this.setActivitiesList();
   }
+
+
 
   ngAfterViewInit(): void {}
 
@@ -264,6 +267,7 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
   //  this.onDistrictSelect({ nameAr:district.target.value})
     district = (district.target as HTMLInputElement).value;
     let districtObject = this.districtService.getDistrictByName(district);
+    this.markerCenter = { lat: districtObject.longitude, lng: districtObject.latitude }
     this.selectedDistrictStatistics = districtObject;
     this.showStatistics = true
   }
@@ -298,6 +302,7 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
 
   toggleSideBar() {
     document.querySelector('.sidebar')?.classList.toggle('active')
+    document.querySelector('.map-warp')?.classList.toggle('active')
     this.isFilterDisplayed = !this.isFilterDisplayed
     this.areaFiltration = false
     this.projectsFiltration = false

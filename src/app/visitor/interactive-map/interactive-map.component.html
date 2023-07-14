@@ -17,7 +17,8 @@
                 <a href class="sidebar-link {{projectsFiltration ? 'active':''}}" title="عرض المشاريع"
                     (click)="toggleFiltration($event,'projectsFiltration')">
                     <i class="fas fa-display"></i>
-                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-none'}}">
+                    
+                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-xl-none'}}">
                         <span  class="menu-text">عرض المشاريع</span>
                         <span class="collapse-icon  fas fa-chevron-{{projectsFiltration ? 'up':'down'}}"></span>
                     </div>
@@ -111,7 +112,7 @@
                 <a href class="sidebar-link {{areaFiltration ? 'active':''}}" title="احصائيات التمويل"
                     (click)="toggleFiltration($event,'areaFiltration')">
                     <i class="fas fa-coins"></i>
-                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-none'}}">
+                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-xl-none'}}">
                         <span  class="menu-text">احصائيات التمويل</span>
                         <span   class="collapse-icon fas fa-chevron-{{areaFiltration ? 'up':'down'}}"></span>
                     </div>
@@ -147,6 +148,7 @@
             [branches]="filteredBranches"
             [districtLocation]="districtLocation"
             [cityLocation]="cityLocation"
+            [centerPoint]="markerCenter"
             [selectedDistrict]="selectedDistrictStatistics"
             (actionTaken)="onDistrictStat($event.nameAr)">
         </app-maps>
