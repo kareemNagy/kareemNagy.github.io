@@ -345,4 +345,9 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
   closeStatistics() {
     this.showStatistics = false;
   }
+  closeSideBar() {
+    if (window.matchMedia("(max-width: 1200px)").matches && document.querySelector('.sidebar')?.classList.contains('active') && !this.areaFiltration) {
+      this.toggleSideBar()
+    }
+  }
 }

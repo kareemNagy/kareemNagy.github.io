@@ -472,6 +472,9 @@
     padding: 10px;
     background: #f1f4f6;
     min-height: auto;
+    &.active {
+        padding: 10px;
+    }
    
 }
 }
