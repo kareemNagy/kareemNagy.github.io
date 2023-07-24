@@ -23,11 +23,12 @@ export class MapsComponent implements OnInit, OnChanges {
   @Input() cityLocation: any = { lat: 24.742394, lng: 46.741473, zoom: 11.5 };
   @Input() districtLocation: any = { lat: 24.65, lng: 46.71, zoom: 2 };
   @Input() selectedDistrict: any;
-  @Input() areaFiltrationStatus!: boolean;
+  @Input() financeStats!: boolean;
+  @Input() projectsView!: boolean;
   @Output() actionTaken = new EventEmitter();
   @Input() centerPoint: any
   size: Size = new Size(30, 30);
-  topSize: Size = new Size(40, 40);
+  topSize: Size = new Size(35, 35);
   apiLoaded: Observable<boolean> = of(false);
   showInfoWindow = false;
   selectedBranch: any;
@@ -37,8 +38,8 @@ export class MapsComponent implements OnInit, OnChanges {
   directionReady = false;
   showStatistics = false;
   districts = this.districtService.getDistricts();
-  mapDiv: any;
-  isNightMode: boolean = false
+  mapDiv!: google.maps.Map;
+  isNightMode: boolean = true
   KSA_BOUNDS = {
     north: 32.186356,
     south: 16.343458,
@@ -303,8 +304,8 @@ export class MapsComponent implements OnInit, OnChanges {
   ]
 
   clusterStyles = [{
-    height: 40,
-    width: 40,
+    height: 32,
+    width: 32,
   }]
 
   clusterOptions = {
@@ -323,6 +324,7 @@ export class MapsComponent implements OnInit, OnChanges {
     private mapDirectionsService: MapDirectionsService,
     private districtService: DistrictService
   ) {
+    console.log(this.financeStats)
     this.init()
   }
 
@@ -365,34 +367,18 @@ export class MapsComponent implements OnInit, OnChanges {
     if (changes["cityLocation"] && !changes["cityLocation"]?.firstChange) {
       console.log("City");
       this.mapLocation = this.cityLocation;
-      this.options = {
-        center: this.mapLocation,
-        zoom: this.mapLocation.zoom,
-        styles: this.optionStyle,
-        restriction: {
-          latLngBounds: this.KSA_BOUNDS,
-          strictBounds: false,
-        },
-        gestureHandling: "cooperative",
-        region: "SA",
-      };
+      this.mapDiv.setCenter(this.mapLocation)
+      this.mapDiv.setZoom(this.mapLocation.zoom)
+
     }
     if (
       changes["districtLocation"] &&
       !changes["districtLocation"]?.firstChange
     ) {
       this.mapLocation = this.districtLocation;
-      this.options = {
-        center: this.mapLocation,
-        zoom: this.mapLocation.zoom,
-        styles: this.optionStyle,
-        restriction: {
-          latLngBounds: this.KSA_BOUNDS,
-          strictBounds: false,
-        },
-        gestureHandling: "cooperative",
-        region: "SA",
-      };
+      this.mapDiv.setCenter(this.mapLocation)
+      this.mapDiv.setZoom(this.mapLocation.zoom)
+
     }
     if (
       changes["selectedDistrict"] &&
@@ -402,9 +388,11 @@ export class MapsComponent implements OnInit, OnChanges {
       this.openStatisticsWindow();
     }
     if (changes['centerPoint']) {
-      this.mapDiv.setCenter(this.centerPoint);
+      if (this.mapDiv) {
+        this.mapDiv.setCenter(this.centerPoint);
+      }
     }
-    if (changes['areaFiltrationStatus']) {
+    if (changes['financeStats']) {
       this.init()
     }
 

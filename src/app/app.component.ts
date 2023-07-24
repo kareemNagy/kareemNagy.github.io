@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   title = "sdb";
   routingList: string[] = [];
   currentRole = "";
-  loggedIn = false;
+  loggedIn = true;
 
   constructor(
     private appPreference: AppPreferenceService,

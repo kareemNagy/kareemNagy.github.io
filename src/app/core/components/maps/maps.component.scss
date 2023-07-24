@@ -1,42 +1,37 @@
 :host::ng-deep {
     position: relative;
-    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
-        0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+    box-shadow:
+        0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
+        0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
+        0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
+        0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
     display: block;
-       min-height: 500px;
+    min-height: 500px;
     .map-container {
         width: 100% !important;
-        margin: 1.5rem 0;
-        border-radius: 0.75rem;
-         
-    }
-    .cluster div {
-            color: #fff!important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        font-weight: bold;
-        font-size: 12px;
-    }
-    .cluster img {
-        // width: 50%;
-        // opacity: 0.5;
-    }
+        height: calc(100vh - 200px) !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        .cluster {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
 
-    .cluster {
-        //     border: 1px solid #ddd;
-        // background: #fff;
-        // border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-    border: 1px solid #fff;
-    background: #a1b1c0;
+            background: #19aec8;
 
+            div {
+                color: #fff !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                font-weight: bold;
+                font-size: 11px;
+            }
+        }
     }
 }
 
@@ -51,6 +46,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  
-   
 }

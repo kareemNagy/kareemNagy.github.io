@@ -17,24 +17,17 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
   selectedActivities: string[] = [];
   activitySettings!: any;
   activitySelectedValues: any[] = [];
-
   mainCategories!: any[];
   selectedCategories: string[] = [];
   categorySelectedValues: string[] = [];
-
   subCategories!: SubCategory[];
   selectedSubCategories: string[] = [];
   subCategorySelectedValues: string[] = [];
-
   categoriesSettings!: any;
-
   dropdownSettings!: IDropdownSettings;
-
   selectedFamilyDistrict: any;
-
   allBranches = this.branchService.getAllBranches();
   filteredBranches: any[] = [];
-
   advancedSearch: boolean = false;
   districts: any[] = [];
   selectedDistrictStatistics: any;
@@ -64,13 +57,13 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
     searchPlaceholderText: "بحث ...",
   };
   citySelectedValues: any[] = [];
-
-  areaFiltration: boolean = false
-  projectsFiltration:boolean = false
   showStatistics = false;
-  isFilterDisplayed = false
-  areaFiltrationStatus = true
   markerCenter: any
+  financeStats: boolean = true
+  financeView: boolean = true
+  projectsView: boolean = false
+  ProjectsViewfristClick: boolean = false
+
   constructor(
     private categoryService: CategoryService,
     private activityService: ActivityService,
@@ -180,7 +173,19 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
     );
   }
 
-  toggleAdvancedSearch() {
+  closeAdsSearch() {
+    this.advancedSearch = !this.advancedSearch;
+    if (this.advancedSearch) {
+      this.activitySelectedValues = [];
+      this.districtSelectedValues = [];
+      this.citySelectedValues = [];
+    } else {
+      this.filteredBranches = this.allBranches;
+    }
+  }
+
+  toggleAdvancedSearch(e: any) {
+    e.preventDefault()
     this.advancedSearch = !this.advancedSearch;
     if (this.advancedSearch) {
       this.activitySelectedValues = [];
@@ -273,11 +278,6 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
   }
 
   onDistrictStat(district: any) {
-    document.querySelector('.sidebar')?.classList.add('active')
-    this.isFilterDisplayed = true
-    this.areaFiltration = true
-    this.projectsFiltration = false
-    this.advancedSearch = false
     let districtObject = this.districtService.getDistrictByName(district);
     this.selectedDistrictStatistics = districtObject;
     this.showStatistics = true
@@ -300,54 +300,38 @@ export class InteractiveMapComponent implements OnInit, AfterViewInit {
       );
   }
 
-  toggleSideBar() {
-    document.querySelector('.sidebar')?.classList.toggle('active')
-    document.querySelector('.map-warp')?.classList.toggle('active')
-    this.isFilterDisplayed = !this.isFilterDisplayed
-    this.areaFiltration = false
-    this.projectsFiltration = false
-    this.advancedSearch = false
-  }
-  
-  toggleFiltration(event: any, type: string) {
-    event.preventDefault()
-    document.querySelector('.sidebar')?.classList.add('active')
-    this.showStatistics = false
-    this.isFilterDisplayed = true
-    if (type === 'areaFiltration') {
-      if (this.areaFiltration == true) {
-        this.areaFiltration = false
-      }else {
-        this.areaFiltration = true
-        this.projectsFiltration = false
-        this.advancedSearch = false
-      }
-      this.areaFiltrationStatus = true
-    } else if (type === 'advancedSearch') {
-      if (this.advancedSearch == true) {
-        this.advancedSearch = false
-      }else {
-        this.advancedSearch = true
-      }
-    }
-    else {
-      if (this.projectsFiltration == true){
-        this.projectsFiltration = false
-      } else {
-        this.projectsFiltration = true
-        this.areaFiltration = false
-        this.advancedSearch = false
-      }
-      this.areaFiltrationStatus = false
-    }
-  }
+
+
+
 
   closeStatistics() {
     this.showStatistics = false;
   }
-  closeSideBar() {
-    if (window.matchMedia("(max-width: 1200px)").matches && document.querySelector('.sidebar')?.classList.contains('active') && !this.areaFiltration) {
-      this.toggleSideBar()
+
+  openFinanceStats(e: any) {
+    e.preventDefault()
+    if (this.financeView) {
+      this.financeView = false
+      this.advancedSearch = false
+    } else {
+      this.financeStats = true
+      this.financeView = true
+      this.projectsView = false
+      this.advancedSearch = false
+    }
+
+  }
+
+  openProjectsView(e: any) {
+    e.preventDefault()
+    if (this.projectsView) {
+      this.projectsView = false
+    } else {
+      this.projectsView = true
+      this.financeStats = false
+      this.financeView = false
     }
   }
+
+
 }

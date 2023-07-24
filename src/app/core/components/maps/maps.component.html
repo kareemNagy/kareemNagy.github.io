@@ -1,14 +1,15 @@
 <ng-container *ngIf="apiLoaded | async; let apiLoaded; else inactive">
 
   <google-map (mapInitialized)="onMapReady($event)" [options]="options" [zoom]="2"> 
-    <ng-container *ngIf="areaFiltrationStatus">
+    <ng-container *ngIf="financeStats">
     <map-marker 
         *ngFor="let districts of districts"
+        [title]="districts.nameAr"
         [position]="{ lat: districts.longitude, lng: districts.latitude }"
         [icon]="{ url: districts.icon, scaledSize: topSize}"
         (mapClick)="openDistrictsInfo($event,districts)"></map-marker>
       </ng-container>
-      <ng-container *ngIf="!areaFiltrationStatus">
+      <ng-container *ngIf="projectsView">
       <map-marker-clusterer
         [minimumClusterSize]="clusterOptions.minimumClusterSize"
         [gridSize]="clusterOptions.gridSize" 
@@ -17,6 +18,7 @@
           *ngFor="let branch of branches"
           [options]="branch.animation == 1.0? {animation: branch.animation}: {}"
           [position]="{ lat: branch.longitude, lng: branch.latitude }"
+          [title]="branch.projectName"
           [icon]="{ url: 'assets/fonts/sdb-icon-font/fonts/' + branch.icon +'.png', scaledSize: size}"
           (mapClick)="openInfoWindow(branch)">
         </map-marker>

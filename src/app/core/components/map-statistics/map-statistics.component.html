@@ -1,24 +1,25 @@
 <div class="statistics-header">
    
     <h3 class="area-name">{{selectedDistrict.nameAr}}</h3>
-    <a (click)="open(statisticsDetails)">معلومات أكثر</a>
+   
     
     
 </div>
 
 <div class="statistics-content">
     <div class="row align-items-center">
-        <div class="col">
+        <div class="col col-xl-12">
             <div class="statistics-value">{{selectedDistrict.totalLoans}}</div>
             <div class="statistics-label">اجمالي عدد الممولين</div>
         </div>
-        <div class="col">
+        <div class="col col-xl-12">
             <div class="statistics-value">{{selectedDistrict.totalExpenses}} ريال</div>
             <div class="statistics-label">حجم التمويل الكلي</div>
         </div>
     </div>
 </div>
 <div class="statistics-footer d-flex justify-content-center mb-3">
+     <a (click)="open(statisticsDetails)" class="btn btn-primary me-2">معلومات أكثر</a>
      <button (click)="closeInfoWindow()" class="btn btn-outline-secondary">
         اغلاق
     </button>
