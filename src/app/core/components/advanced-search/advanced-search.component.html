@@ -1,61 +1,91 @@
-<span class="icon-close d-flex d-sm-none" (click)="closePopUp()"></span>
 
-<h4 class="advanced-search-title d-block d-sm-none">بحث متقدم</h4>
+<div class="container">
+    <div class="app-advanced-search">
+        <div class="advanced-search-warp">
+            <div class="adv-search-header">
+                <h4 class="advanced-search-title">بحث متقدم</h4>
 
-<div class="search-fields-container">
-    <div class="">
-        <div class="mb-3">
-            <label class="form-label">اسم المشروع</label>
-            <div class="position-relative">
-                <span class="icon-search"></span>
-                <input type="text" class="form-control" placeholder="ابحث عن منتج...">
+                <span class="icon-close" (click)="closePopUp()"></span>
             </div>
-        </div>
-        <div class="">
-            <label class="form-label">المناطق</label>
-            <div class="">
-                <div class="mb-3">
-                    <select class="form-select" (change)="onDistrictSelect($event)">
-                        <option value="" selected disabled>اختر المنطقة</option>
-                        <option *ngFor="let district of districts" [value]="district.nameAr">{{district.nameAr}}
-                        </option>
-                    </select>
+
+            <div class="search-fields-container">
+
+                <div class="row">
+                    <div class="mb-3 col-lg-2 ">
+                        <label class="form-label">اسم المشروع</label>
+                        <div class="position-relative">
+                            <!-- <span class="icon-search"></span> -->
+                            <input type="text" class="form-control"
+                                placeholder="ابحث عن منتج...">
+                        </div>
+                    </div>
+                    <div class=" col-lg-3 col-md-12">
+                        <label class="form-label">المناطق</label>
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <select class="form-select"
+                                    (change)="onDistrictSelect($event)">
+                                    <option value selected disabled>اختر المنطقة</option>
+                                    <option *ngFor="let district of districts"
+                                        [value]="district.nameAr">{{district.nameAr}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <select class="form-select"
+                                    (change)="onCitySelect($event)">
+                                    <option value selected disabled>اختر المدينة</option>
+                                    <option *ngFor="let city of cities"
+                                        [value]="city.nameAr">{{city.nameAr}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <label class="form-label">النشاط</label>
+                        <div class="row">
+                            <div class="col-lg-4 mb-3 ">
+                                <ng-multiselect-dropdown
+                                    [placeholder]="'نشاط المشروع'"
+                                    [settings]="activitySettings"
+                                    [data]="activities"
+                                    (onSelect)="onActivitySelect($event)"
+                                    (onDeSelect)="onActivityDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-lg-4 mb-3 ">
+                                <ng-multiselect-dropdown
+                                    [disabled]="mainCategories && mainCategories.length > 0? false: true"
+                                    [placeholder]="'تصنيف المشروع'"
+                                    [settings]="categoriesSettings"
+                                    [data]="mainCategories"
+                                    (onSelect)="onMainCategorySelect($event)"
+                                    (onDeSelect)="onMainCategoryDeSelect($event)"
+                                    [(ngModel)]="categorySelectedValues">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-lg-4 mb-3 ">
+                                <ng-multiselect-dropdown
+                                    [disabled]="subCategories && subCategories.length > 0? false: true"
+                                    [placeholder]="'التصنيف الفرعي'"
+                                    [settings]="categoriesSettings"
+                                    [data]="subCategories"
+                                    (onSelect)="onSubCategorySelect($event)"
+                                    (onDeSelect)="onSubCategoryDeSelect($event)"
+                                    [(ngModel)]="subCategorySelectedValues">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+
+                        <button style="    margin-top: 32px;"
+                            class="mb-3 btn btn-primary custom-btn">بحث</button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <select class="form-select" (change)="onCitySelect($event)">
-                        <option value="" selected disabled>اختر المدينة</option>
-                        <option *ngFor="let city of cities" [value]="city.nameAr">{{city.nameAr}}</option>
-                    </select>
-                </div>
+
             </div>
-        </div>
-        <div class="">
-            <label class="form-label">النشاط</label>
-            <div class="">
-                <div class="mb-3">
-                    <ng-multiselect-dropdown [placeholder]="'نشاط المشروع'" [settings]="activitySettings"
-                        [data]="activities" (onSelect)="onActivitySelect($event)"
-                        (onDeSelect)="onActivityDeSelect($event)">
-                    </ng-multiselect-dropdown>
-                </div>
-                <div class="mb-3">
-                    <ng-multiselect-dropdown [disabled]="mainCategories && mainCategories.length > 0? false: true"
-                        [placeholder]="'تصنيف المشروع'" [settings]="categoriesSettings" [data]="mainCategories"
-                        (onSelect)="onMainCategorySelect($event)" (onDeSelect)="onMainCategoryDeSelect($event)"
-                        [(ngModel)]="categorySelectedValues">
-                    </ng-multiselect-dropdown>
-                </div>
-                <div class="mb-3">
-                    <ng-multiselect-dropdown [disabled]="subCategories && subCategories.length > 0? false: true"
-                        [placeholder]="'التصنيف الفرعي'" [settings]="categoriesSettings" [data]="subCategories"
-                        (onSelect)="onSubCategorySelect($event)" (onDeSelect)="onSubCategoryDeSelect($event)"
-                        [(ngModel)]="subCategorySelectedValues">
-                    </ng-multiselect-dropdown>
-                </div>
-            </div>
-        </div>
-        <div class="">
-            <button class="mb-3 btn btn-primary">بحث</button>
         </div>
     </div>
+
 </div>

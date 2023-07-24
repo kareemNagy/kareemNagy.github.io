@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\core",
+    "\\src\\app\\core\\components",
+    "\\src\\app\\core\\components\\map-statistics-details",
+    "\\src\\app\\core\\services"
+  ],
+  "PreviewInSolutionExplorer": false
+}

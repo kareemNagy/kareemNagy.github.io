@@ -1,157 +1,144 @@
 
 
 <div class="position-relative">
-    <div class="sidebar">
-        <div class="top-section">
-            <img class="logo" src="assets/images/logo-sdb-2030.svg" />
-            <div class="sidebar-toggle-btn" (click)="toggleSideBar()">
-                <i class="fas fa-{{isFilterDisplayed ? 'close':'filter'}}"></i>
-            </div>
-        </div>
 
-        <div class="sidebar-menu">
-            <div class="top-menu">
-                <h3 class="menu-group-title">القائمة</h3>
-               
-
-                <a href class="sidebar-link {{projectsFiltration ? 'active':''}}" title="عرض المشاريع"
-                    (click)="toggleFiltration($event,'projectsFiltration')">
-                    <i class="fas fa-display"></i>
-                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-none'}}">
-                        <span  class="menu-text">عرض المشاريع</span>
-                        <span class="collapse-icon  fas fa-chevron-{{projectsFiltration ? 'up':'down'}}"></span>
-                    </div>
+    <div class="mab-filtration-warp">
+        <ul class="menu-filter-list">
+            <li class="{{financeView ? 'active' :''}}">
+                <a href="#" (click)="openFinanceStats($event)">
+                    <img src="assets/icons/statistics.svg">
+                    <label>احصائيات التمويل</label>
                 </a>
-
-                <div class="fliter-warp-content" *ngIf="projectsFiltration">
-                    <div class="filter-section">
-                        <div class="position-relative">
-
-                            <div class="filter-dropdowns">
-                                <div>
-                                    <select
-                                        class="form-select statistics-interactive-map-select"
-                                        (change)="openFamiliesProjects($event, content)">
-                                        <option value selected disabled>اختر
-                                            مشاريع
-                                            الأسر
-                                            بالمنطقة</option>
-                                        <option
-                                            *ngFor="let district of districts"
-                                            [value]="district.nameAr">{{district.nameAr}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <ng-multiselect-dropdown
-                                    [placeholder]="'المنطقة'"
-                                    [settings]="citiesDropdownSettings"
-                                    [data]="districts"
-                                    (onSelect)="onDistrictSelect($event)"
-                                    (onDeSelect)="onDistrictDeSelect()"
-                                    [(ngModel)]="districtSelectedValues">
-                                </ng-multiselect-dropdown>
-                                <div>
-                                    <select
-                                        class="form-select statistics-interactive-map-select"
-                                        (change)="onDistrictStatisticsSelect($event)">
-                                        <option value selected disabled>اختر
-                                            احصائيات
-                                            المنطقة</option>
-                                        <option
-                                            *ngFor="let district of districts"
-                                            [value]="district.nameAr">{{district.nameAr}}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <ng-multiselect-dropdown
-                                    [placeholder]="'نشاط المشروع'"
-                                    [settings]="activitySettings"
-                                    [data]="activities"
-                                    (onSelect)="onActivitySelect($event)"
-                                    (onDeSelect)="onActivityDeSelect($event)"
-                                    (click)="closeAdvancedSearch()"
-                                    [(ngModel)]="activitySelectedValues">
-                                </ng-multiselect-dropdown>
-
-                                <ng-multiselect-dropdown
-                                    [placeholder]="'المدينة'"
-                                    [settings]="citiesDropdownSettings"
-                                    [data]="cities"
-                                    (onSelect)="onCitySelect($event)"
-                                    [(ngModel)]="citySelectedValues">
-                                </ng-multiselect-dropdown>
-
-                            </div>
-
-                        </div>
-                    </div>
-                     <a href class="sidebar-link {{advancedSearch?'active':''}}" title="بحث متقدم"
-                    (click)="toggleFiltration($event,'advancedSearch')">
-                    <i class="fas fa-search"></i>
-                    <div
-                        class="{{isFilterDisplayed ? 'd-flex w-100 align-items-center justify-content-between':'d-none'}}">
-                        <span class="menu-text"> بحث متقدم</span>
-
-                        <span
-                            class="collapse-icon  fas fa-chevron-{{advancedSearch ? 'up':'down'}}"></span>
-                    </div>
+            </li>
+            <li class="{{projectsView ? 'active' :''}}">
+                <a href="#" (click)="openProjectsView($event)">
+                    <img src="assets/icons/projects.svg">
+                    <label>عرض المشاريع</label>
                 </a>
-                <div class="fliter-warp-content" *ngIf="advancedSearch">
-                    <div class="filter-section">
-                        <app-advanced-search
-                            (filteredBranchesUpdated)="updateFilteredBranches($event)"
-                            (districtSelected)="updateDistrict($event)"
-                            (citySelected)="updateCity($event)"
-                            (closeAdvancedSearch)="toggleAdvancedSearch()"></app-advanced-search>
-                    </div>
-                </div>
-                </div>
-
-                <a href class="sidebar-link {{areaFiltration ? 'active':''}}" title="احصائيات التمويل"
-                    (click)="toggleFiltration($event,'areaFiltration')">
-                    <i class="fas fa-coins"></i>
-                    <div class="{{isFilterDisplayed ? ' d-flex w-100 align-items-center justify-content-between':'d-none'}}">
-                        <span  class="menu-text">احصائيات التمويل</span>
-                        <span   class="collapse-icon fas fa-chevron-{{areaFiltration ? 'up':'down'}}"></span>
-                    </div>
-                </a>
-
-                <div class="fliter-warp-content" *ngIf="areaFiltration">
-                    <div class="filter-section">
-                        <div class="filter-dropdowns">
-                            <div>
-                                <select
-                                    class="form-select statistics-interactive-map-select"
-                                    (change)="onDistrictStatisticsSelect($event)">
-                                    <option value selected disabled>اختر احصائيات المنطقة  </option>
-                                    <option *ngFor="let district of districts"
-                                        [value]="district.nameAr">{{district.nameAr}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <app-map-statistics *ngIf="showStatistics" (closeStatistics)="closeStatistics()"
-                    [selectedDistrict]="selectedDistrictStatistics">
-                    </app-map-statistics>
-                </div>
-
-            </div>
-
-        </div>
-
+            </li>
+        </ul>
     </div>
+
+    <div class="projects-view-filtration filter-section" *ngIf="projectsView">
+        <div class="filter-dropdowns" *ngIf="!advancedSearch">
+            <div class="container horizontal-scroll">
+                <div class="row">
+                    <!-- <div class="col-4 col-lg-2 mb-3">
+                        <select
+                            class="form-select statistics-interactive-map-select"
+                            (change)="openFamiliesProjects($event, content)">
+                            <option value selected disabled>اختر
+                                مشاريع
+                                الأسر
+                                بالمنطقة</option>
+                            <option
+                                *ngFor="let district of districts"
+                                [value]="district.nameAr">{{district.nameAr}}
+                            </option>
+                        </select>
+                    </div> -->
+
+                     <ng-multiselect-dropdown
+                        class="col-4 col-lg-3  mb-3"
+                        [placeholder]="'نشاط المشروع'"
+                        [settings]="activitySettings"
+                        [data]="activities"
+                        (onSelect)="onActivitySelect($event)"
+                        (onDeSelect)="onActivityDeSelect($event)"
+                        
+                        [(ngModel)]="activitySelectedValues">
+                    </ng-multiselect-dropdown>
+
+                    <ng-multiselect-dropdown
+                        class="col-4 col-lg-3  mb-3"
+                        [placeholder]="'المنطقة'"
+                        [settings]="citiesDropdownSettings"
+                        [data]="districts"
+                        (onSelect)="onDistrictSelect($event)"
+                        (onDeSelect)="onDistrictDeSelect()"
+                        [(ngModel)]="districtSelectedValues">
+                    </ng-multiselect-dropdown>
+
+                    <!-- <div class="col-4 col-lg-2  mb-3">
+                        <select
+                            class="form-select statistics-interactive-map-select"
+                            (change)="onDistrictStatisticsSelect($event)">
+                            <option value selected disabled>اختر
+                                احصائيات
+                                المنطقة</option>
+                            <option
+                                *ngFor="let district of districts"
+                                [value]="district.nameAr">{{district.nameAr}}
+                            </option>
+                        </select>
+                    </div> -->
+
+                   
+
+                    <ng-multiselect-dropdown
+                        class="col-4 col-lg-3 mb-3"
+                        [placeholder]="'المدينة'"
+                        [settings]="citiesDropdownSettings"
+                        [data]="cities"
+                        (onSelect)="onCitySelect($event)"
+                        [(ngModel)]="citySelectedValues">
+                    </ng-multiselect-dropdown>
+                    <div class="col-4 col-lg-2  mb-3">
+                        <button class="btn btn-primary custom-btn"
+                            (click)="toggleAdvancedSearch($event)">
+                            <label>{{advancedSearch ? 'إغلاق': 'بحث متقدم'}}</label>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-advanced-search
+            *ngIf="advancedSearch"
+            (filteredBranchesUpdated)="updateFilteredBranches($event)"
+            (districtSelected)="updateDistrict($event)"
+            (citySelected)="updateCity($event)"
+            (closeAdvancedSearch)="closeAdsSearch()">
+        </app-advanced-search>
+    </div>
+
     <div class="map-warp">
-        <app-maps  [areaFiltrationStatus]="areaFiltrationStatus"
+        <div class="sidebar" *ngIf="financeView">
+            <h3 class="side-title">
+                <img src="assets/icons/statistics.svg">
+                احصائيات المنطقة
+            </h3>
+            <div class="side-bar-content">
+                <div class="mb-3">
+                    <select
+                        class="form-select statistics-interactive-map-select"
+                        (change)="onDistrictStatisticsSelect($event)">
+                        <option value selected disabled>اختر احصائيات المنطقة
+                        </option>
+                        <option *ngFor="let district of districts"
+                            [value]="district.nameAr">{{district.nameAr}}
+                        </option>
+                    </select>
+                </div>
+                 <app-map-statistics
+                *ngIf="showStatistics"
+                (closeStatistics)="closeStatistics()"
+                [selectedDistrict]="selectedDistrictStatistics">
+            </app-map-statistics>
+            </div>
+
+           
+        </div>
+        <app-maps
+            [financeStats]="financeStats"
+            [projectsView]="projectsView"
             [branches]="filteredBranches"
             [districtLocation]="districtLocation"
             [cityLocation]="cityLocation"
+            [centerPoint]="markerCenter"
             [selectedDistrict]="selectedDistrictStatistics"
             (actionTaken)="onDistrictStat($event.nameAr)">
         </app-maps>
     </div>
-
 </div>
 
 <ng-template #content let-modal>
